@@ -1,8 +1,18 @@
+openapi: 3.0.0
+info:
+  title: 本命星盘API
+  version: 1.0.0
+  description: 输入出生日期、时间和地点，返回十大神行星星座信息和星座名称对照表
+
+servers:
+  - url: https://bazi-api-1gzleh3n9afc85a9-1322048228.ap-shanghai.app.tcloudbase.com
+    description: 云函数API服务器
+
 paths:
   /get_horoscope:
     post:
       summary: 查询本命星盘
-      description: 根据出生年月日、时间、地点查询星体落座信息
+      description: 提交出生信息，返回本命星盘中十大神行星所在星座
       operationId: getHoroscope
       requestBody:
         required: true
@@ -14,15 +24,15 @@ paths:
                 birth_date:
                   type: string
                   example: "1994-02-07"
-                  description: 出生日期，格式为 yyyy-mm-dd
+                  description: 出生日期（yyyy-mm-dd）
                 birth_time:
                   type: string
                   example: "19:20"
-                  description: 出生时间，格式为 HH:mm
+                  description: 出生时间（HH:mm）
                 birth_place:
                   type: string
                   example: "深圳"
-                  description: 出生地点
+                  description: 出生地（城市）
       responses:
         "200":
           description: 成功返回星盘信息
@@ -33,10 +43,13 @@ paths:
                 properties:
                   birth_date:
                     type: string
+                    example: "1994-02-07"
                   birth_time:
                     type: string
+                    example: "19:20"
                   birth_place:
                     type: string
+                    example: "深圳"
                   planets:
                     type: object
                     additionalProperties:
@@ -52,3 +65,16 @@ paths:
                           type: number
                   zodiac_table:
                     type: object
+                    example:
+                      "1": "白羊座"
+                      "2": "金牛座"
+                      "3": "双子座"
+                      "4": "巨蟹座"
+                      "5": "狮子座"
+                      "6": "处女座"
+                      "7": "天秤座"
+                      "8": "天蝎座"
+                      "9": "射手座"
+                      "10": "摩羯座"
+                      "11": "水瓶座"
+                      "12": "双鱼座"
