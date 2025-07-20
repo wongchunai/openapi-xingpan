@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
   title: "Flatten Horoscope API"
   version: "1.0.0"
@@ -6,38 +6,33 @@ info:
 
 servers:
   - url: https://bazi-api-1gzleh3n9afc85a9-1322048228.ap-shanghai.app.tcloudbase.com
-    description: "腾讯云 CloudBase API 服务器"
+    description: "腾讯云 CloudBase API服务器"
 
 paths:
   /flatten_getHoroscope:
     post:
       summary: "获取扁平化星盘数据"
-      description: "根据出生信息返回10颗星体的星座、度数等简化结构，适合 AI 解析使用"
-      operationId: flatten_getHoroscope
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - birth_date
-                - birth_time
-                - birth_place
-              properties:
-                birth_date:
-                  type: string
-                  format: date
-                  example: "1994-02-07"
-                  description: "出生日期（格式：yyyy-mm-dd）"
-                birth_time:
-                  type: string
-                  example: "19:20"
-                  description: "出生时间（格式：HH:mm）"
-                birth_place:
-                  type: string
-                  example: "深圳"
-                  description: "出生城市（简体中文）"
+      description: "根据出生信息返回10颗星体的星座、度数等简化结构，适合AI解析"
+      operationId: getFlattenHoroscope
+      parameters:
+        - in: query
+          name: birth_date
+          required: true
+          schema:
+            type: string
+            example: "1994-02-07"
+        - in: query
+          name: birth_time
+          required: true
+          schema:
+            type: string
+            example: "19:20"
+        - in: query
+          name: birth_place
+          required: true
+          schema:
+            type: string
+            example: "深圳"
       responses:
         "200":
           description: 成功返回扁平化星盘信息
@@ -48,14 +43,11 @@ paths:
                 properties:
                   birth_date:
                     type: string
-                    example: "1994-02-07"
                   birth_time:
                     type: string
-                    example: "19:20"
                   birth_place:
                     type: string
-                    example: "深圳"
                   flattened:
-                    type: string
-                    example: "太阳：水瓶座 18.46°，月亮：摩羯座 10.78°，水星：双鱼座 6.27°，金星：水瓶座 23.59°，火星：水瓶座 8.03°，木星：天蝎座 13.97°，土星：双鱼座 1.12°，天王星：摩羯座 21.85°，海王星：摩羯座 21.85°，冥王星：天蝎座 27.93°"
-                    description: "10颗行星的星座与度数简洁描述"
+                    type: object
+                    additionalProperties:
+                      type: string
