@@ -6,13 +6,13 @@ info:
 
 servers:
   - url: https://bazi-api-1gzleh3n9afc85a9-1322048228.ap-shanghai.app.tcloudbase.com
-    description: "腾讯云 CloudBase API服务器"
+    description: "腾讯云 CloudBase API 服务器"
 
 paths:
   /flatten_getHoroscope:
     post:
       summary: "获取扁平化星盘数据"
-      description: "根据出生信息返回10颗星体的星座、度数等简化结构，适合AI解析"
+      description: "根据出生信息返回10颗星体的星座、度数等简化结构，适合 AI 解析使用"
       operationId: flatten_getHoroscope
       requestBody:
         required: true
@@ -27,6 +27,7 @@ paths:
               properties:
                 birth_date:
                   type: string
+                  format: date
                   example: "1994-02-07"
                   description: "出生日期（格式：yyyy-mm-dd）"
                 birth_time:
@@ -47,11 +48,14 @@ paths:
                 properties:
                   birth_date:
                     type: string
+                    example: "1994-02-07"
                   birth_time:
                     type: string
+                    example: "19:20"
                   birth_place:
                     type: string
+                    example: "深圳"
                   flattened:
                     type: string
-                    description: 扁平化描述，如 “太阳：水瓶座 18.46°，月亮：摩羯座 10.78°…”
-
+                    example: "太阳：水瓶座 18.46°，月亮：摩羯座 10.78°，水星：双鱼座 6.27°，金星：水瓶座 23.59°，火星：水瓶座 8.03°，木星：天蝎座 13.97°，土星：双鱼座 1.12°，天王星：摩羯座 21.85°，海王星：摩羯座 21.85°，冥王星：天蝎座 27.93°"
+                    description: "10颗行星的星座与度数简洁描述"
