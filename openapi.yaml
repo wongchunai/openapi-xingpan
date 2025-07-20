@@ -1,41 +1,45 @@
-openapi: 3.0.0
+openapi: "3.0.0"
 info:
-  title: 本命星盘API
-  version: 1.0.0
-  description: 输入出生日期、时间和地点，返回十大神行星星座信息和星座名称对照表
+  title: "Flatten Horoscope API"
+  version: "1.0.0"
+  description: "输入出生年月日、时间、地点，返回扁平化星盘数据（十大神行星与星座）"
 
 servers:
   - url: https://bazi-api-1gzleh3n9afc85a9-1322048228.ap-shanghai.app.tcloudbase.com
-    description: 云函数API服务器
+    description: "腾讯云 CloudBase API服务器"
 
 paths:
-  /get_horoscope:
+  /flatten_getHoroscope:
     post:
-      summary: 查询本命星盘
-      description: 输入出生信息，返回十大神行星星座信息
-      operationId: getHoroscope
-      parameters:
-        - name: birth_date
-          in: query
-          required: true
-          schema:
-            type: string
-          description: 出生日期（yyyy-mm-dd）
-        - name: birth_time
-          in: query
-          required: true
-          schema:
-            type: string
-          description: 出生时间（HH:mm）
-        - name: birth_place
-          in: query
-          required: true
-          schema:
-            type: string
-          description: 出生城市
+      summary: "获取扁平化星盘数据"
+      description: "根据出生信息返回10颗星体的星座、度数等简化结构，适合AI解析"
+      operationId: flatten_getHoroscope
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - birth_date
+                - birth_time
+                - birth_place
+              properties:
+                birth_date:
+                  type: string
+                  example: "1994-02-07"
+                  description: "出生日期（格式：yyyy-mm-dd）"
+                birth_time:
+                  type: string
+                  example: "19:20"
+                  description: "出生时间（格式：HH:mm）"
+                birth_place:
+                  type: string
+                  example: "深圳"
+                  description: "出生城市（简体中文）"
       responses:
         "200":
-          description: 成功返回星盘数据
+          description: 成功返回扁平化星盘信息
           content:
             application/json:
               schema:
@@ -47,23 +51,7 @@ paths:
                     type: string
                   birth_place:
                     type: string
-                  planets:
-                    type: object
-                    additionalProperties:
-                      type: object
-                      properties:
-                        星座序號:
-                          type: integer
-                        星座名稱:
-                          type: string
-                        度數:
-                          type: number
-                        全度數:
-                          type: number
-                  zodiac_table:
-                    type: object
-                    example:
-                      "1": "白羊座"
-                      "2": "金牛座"
-                      "11": "水瓶座"
-                      "12": "双鱼座"
+                  flattened:
+                    type: string
+                    description: 扁平化描述，如 “太阳：水瓶座 18.46°，月亮：摩羯座 10.78°…”
+
