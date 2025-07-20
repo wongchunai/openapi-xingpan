@@ -1,38 +1,37 @@
 openapi: 3.0.0
 info:
-  title: "Flatten Horoscope API"
-  version: "1.0.0"
-  description: "输入出生年月日、时间、地点，返回扁平化星盘数据（十大神行星与星座）"
+  title: Flatten Horoscope API
+  version: 1.0.0
+  description: 输入出生年月日、时间、地点，返回扁平化星盘数据（十大神行星与星座）
 
 servers:
   - url: https://bazi-api-1gzleh3n9afc85a9-1322048228.ap-shanghai.app.tcloudbase.com
-    description: "腾讯云 CloudBase API服务器"
 
 paths:
   /flatten_getHoroscope:
     post:
-      summary: "获取扁平化星盘数据"
-      description: "根据出生信息返回10颗星体的星座、度数等简化结构，适合AI解析"
+      summary: 获取扁平化星盘数据
       operationId: getFlattenHoroscope
-      parameters:
-        - in: query
-          name: birth_date
-          required: true
-          schema:
-            type: string
-            example: "1994-02-07"
-        - in: query
-          name: birth_time
-          required: true
-          schema:
-            type: string
-            example: "19:20"
-        - in: query
-          name: birth_place
-          required: true
-          schema:
-            type: string
-            example: "深圳"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - birth_date
+                - birth_time
+                - birth_place
+              properties:
+                birth_date:
+                  type: string
+                  example: "1994-02-07"
+                birth_time:
+                  type: string
+                  example: "19:20"
+                birth_place:
+                  type: string
+                  example: "深圳"
       responses:
         "200":
           description: 成功返回扁平化星盘信息
