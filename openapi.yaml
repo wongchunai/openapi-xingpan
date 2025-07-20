@@ -1,41 +1,31 @@
-openapi: 3.0.0
-info:
-  title: 本命星盘API
-  version: 1.0.0
-  description: 输入出生年月日、时间、地点，返回十大神行星星座信息和星座名称对照表
-servers:
-  - url: https://bazi-api-1gzleh3n9afc85a9-1322048228.ap-shanghai.app.tcloudbase.com
-    description: 星盘API服务器
 paths:
   /get_horoscope:
     post:
       summary: 查询本命星盘
-      description: 根据出生年月日、时间、地点查询本命星盘信息
+      description: 根据出生年月日、时间、地点查询星体落座信息
       operationId: getHoroscope
-      parameters:
-        - in: query
-          name: birth_date
-          required: true
-          description: 出生日期，格式为 yyyy-mm-dd
-          schema:
-            type: string
-        - in: query
-          name: birth_time
-          required: true
-          description: 出生时间，格式为 HH:mm
-          schema:
-            type: string
-        - in: query
-          name: birth_place
-          required: true
-          description: 出生地点（城市或行政区）
-          schema:
-            type: string
       requestBody:
-        content: {}
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                birth_date:
+                  type: string
+                  example: "1994-02-07"
+                  description: 出生日期，格式为 yyyy-mm-dd
+                birth_time:
+                  type: string
+                  example: "19:20"
+                  description: 出生时间，格式为 HH:mm
+                birth_place:
+                  type: string
+                  example: "深圳"
+                  description: 出生地点
       responses:
         "200":
-          description: 查询成功
+          description: 成功返回星盘信息
           content:
             application/json:
               schema:
@@ -43,13 +33,10 @@ paths:
                 properties:
                   birth_date:
                     type: string
-                    example: "1994-02-07"
                   birth_time:
                     type: string
-                    example: "19:20"
                   birth_place:
                     type: string
-                    example: "深圳"
                   planets:
                     type: object
                     additionalProperties:
@@ -57,64 +44,11 @@ paths:
                       properties:
                         星座序號:
                           type: integer
-                          example: 11
                         星座名稱:
                           type: string
-                          example: "水瓶座"
                         度數:
                           type: number
-                          example: 18.46
                         全度數:
                           type: number
-                          example: 318.46
                   zodiac_table:
                     type: object
-                    example:
-                      "1": "白羊座"
-                      "2": "金牛座"
-                      "3": "双子座"
-                      "4": "巨蟹座"
-                      "5": "狮子座"
-                      "6": "处女座"
-                      "7": "天秤座"
-                      "8": "天蝎座"
-                      "9": "射手座"
-                      "10": "摩羯座"
-                      "11": "水瓶座"
-                      "12": "双鱼座"
-components:
-  examples:
-    GetHoroscope_post:
-      value:
-        ReqExample:
-          birth_date: "1994-02-07"
-          birth_time: "19:20"
-          birth_place: "深圳"
-        RespExample:
-          birth_date: "1994-02-07"
-          birth_time: "19:20"
-          birth_place: "深圳"
-          planets:
-            太阳:
-              星座序號: 11
-              星座名稱: 水瓶座
-              度數: 18.46
-              全度數: 318.46
-            月亮:
-              星座序號: 10
-              星座名稱: 摩羯座
-              度數: 10.78
-              全度數: 280.78
-          zodiac_table:
-            "1": "白羊座"
-            "2": "金牛座"
-            "3": "双子座"
-            "4": "巨蟹座"
-            "5": "狮子座"
-            "6": "处女座"
-            "7": "天秤座"
-            "8": "天蝎座"
-            "9": "射手座"
-            "10": "摩羯座"
-            "11": "水瓶座"
-            "12": "双鱼座"
